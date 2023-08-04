@@ -1,4 +1,4 @@
-import createHTTPService from "./httpSerive";
+import createHTTPService from "./httpService";
 export interface IGame {
   id: number;
   name: string;

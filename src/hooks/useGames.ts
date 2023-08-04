@@ -3,6 +3,7 @@ import gameService, {
   IFetchGamesResonse,
   IGame,
 } from "../services/gameService";
+import { CanceledError } from "../services/apiClient";
 
 const useGames = () => {
   const [games, setGames] = useState<IGame[]>([]);
@@ -13,7 +14,10 @@ const useGames = () => {
 
     request
       .then((response) => setGames(response.data.results))
-      .catch((error) => seterror(error.message));
+      .catch((error) => {
+        if (error instanceof CanceledError) return;
+        seterror(error.message);
+      });
 
     return () => cancel();
   }, []);
